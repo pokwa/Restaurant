@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IDataInterface
+namespace Restaurant
 {
     public enum MoveChairErrorCodes
     {

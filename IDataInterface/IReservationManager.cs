@@ -4,10 +4,8 @@ using System.Text;
 
 namespace IDataInterface
 {
-    public enum RemoveTableErrorCodes
+    public interface IReservationManager
     {
-        NoSuchTable,
-        TableHasChairs,
-        Ok
+        List<TimeSlot> GetTimeSlotsFrom(DateTime start);
     }
 }

@@ -13,5 +13,11 @@ namespace DataAccess
 
         public DbSet<Chair> Chairs { get; set; }
         public DbSet<Table> Tables { get; set; }
+
+        public DbSet<Dish> Menu { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<TimeSlot> TimeSlots { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

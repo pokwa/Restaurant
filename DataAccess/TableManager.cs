@@ -17,6 +17,14 @@ namespace DataAccess
             context.SaveChanges();
         }
 
+        public List<Table> GetAllTables()
+        {
+            using var context = new RestaurantContext();
+            return (from t in context.Tables
+                    select t)
+                    .Include(t => t.Chairs).ToList();
+        }
+
         public Table GetTableByTableNumber(int tableNumber)
         {
             using var context = new RestaurantContext();

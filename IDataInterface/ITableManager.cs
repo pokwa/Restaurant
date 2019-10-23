@@ -10,5 +10,6 @@ namespace IDataInterface
         void AddTable(int tableNumber);
 
         void RemoveTable(int tableID);
+        List<Table> GetAllTables();
     }
 }
