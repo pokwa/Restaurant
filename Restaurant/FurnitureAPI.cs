@@ -40,5 +40,18 @@ namespace Restaurant
 
             return MoveChairErrorCodes.Ok;
         }
+
+        public RemoveTableErrorCodes RemoveTable(int tableNumber)
+        {
+            var newTable = tableManager.GetTableByTableNumber(tableNumber);
+            if (newTable == null)
+                return RemoveTableErrorCodes.NoSuchTable;
+            if (newTable.Chairs.Count > 0)
+                return RemoveTableErrorCodes.TableHasChairs;
+
+            tableManager.RemoveTable(newTable.TableID);
+
+            return RemoveTableErrorCodes.Ok;
+        }
     }
 }

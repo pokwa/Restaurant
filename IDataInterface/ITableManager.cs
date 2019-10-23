@@ -8,5 +8,7 @@ namespace IDataInterface
     {
         Table GetTableByTableNumber(int tableNumber);
         void AddTable(int tableNumber);
+
+        void RemoveTable(int tableID);
     }
 }
