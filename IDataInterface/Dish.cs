@@ -14,5 +14,6 @@ namespace IDataInterface
         public int DishNumber { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+        public DishType DishType { get; set; }
     }
 }

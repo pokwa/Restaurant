@@ -21,6 +21,19 @@ namespace DataAccess
             context.SaveChanges();
         }
 
+        public List<Dish> GetOrderForTable(int tableNumber, DishType nowServing)
+        {
+            using var context = new RestaurantContext();
+            return (from o in context.Orders.Include(o => o.Items)
+                    join t in context.Tables
+                    on o.TableID equals t.TableID
+                    where t.TableNumber == tableNumber
+                    select o.Items)
+                    .SelectMany(d => d)
+                    .Where(d => d.DishType == nowServing)
+                    .ToList();
+        }
+
         public void CloseOrder(int orderID)
         {
             using var context = new RestaurantContext();
