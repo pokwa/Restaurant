@@ -65,5 +65,15 @@ namespace DataAccess
                     .Include(o => o.Items)
                     .FirstOrDefault();
         }
+
+        public List<Order> GetAllClosedOrders()
+        {
+            using var context = new RestaurantContext();
+            return (from o in context.Orders
+                    where !o.IsActive
+                    select o)
+                    .Include(o => o.Items)
+                    .ToList();
+        }
     }
 }

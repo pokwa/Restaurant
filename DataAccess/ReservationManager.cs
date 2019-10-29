@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class ReservationManager
+    public class ReservationManager : IReservationManager
     {
         public TimeSlot FindOpenTable(int numberOfPeople, DateTime start)
         {
@@ -21,6 +21,24 @@ namespace DataAccess
                              orderby s.Start
                              select s);
             return timeSlots.FirstOrDefault();
+        }
+
+        public List<Reservation> GetNumberOfReservationsUntil(DateTime endDate)
+        {
+            using var context = new RestaurantContext();
+            return (from s in context.TimeSlots.Include(s => s.Reservations)
+                    where s.Start <= endDate && s.Start >= DateTime.Now
+                    select s)
+                    .SelectMany(s => s.Reservations)
+                    .ToList();
+        }
+
+        public List<TimeSlot> GetTimeSlotsFrom(DateTime start)
+        {
+            using var context = new RestaurantContext();
+            return (from s in context.TimeSlots
+                    where s.Start >= start
+                    select s).ToList();
         }
     }
 }

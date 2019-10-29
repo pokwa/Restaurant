@@ -10,5 +10,6 @@ namespace IDataInterface
         Order GetActiveOrder(int tableID);
         Order CreateActiveOrder(int tableID);
         void CloseOrder(int orderID);
+        List<Order> GetAllClosedOrders();
     }
 }
