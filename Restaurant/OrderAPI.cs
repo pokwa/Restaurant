@@ -1,6 +1,8 @@
-﻿using IDataInterface;
+﻿using DataAccess;
+using IDataInterface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Restaurant
@@ -43,13 +45,38 @@ namespace Restaurant
             if (table == null)
                 return new Tab { TabStatus = Tab.Status.NoSuchTable };
             var order = orderManager.GetActiveOrder(table.TableID);
-            if(order == null || !order.IsActive)
+            if (IsTabSettled(order))
                 return new Tab { TabStatus = Tab.Status.Settled };
-            var tab = new Tab();
-            foreach (var item in order.Items)
-                tab.Amount += item.Price;
-            tab.TabStatus = tab.Amount > 0 ? Tab.Status.Open : Tab.Status.Settled;
+            Tab tab = GetTabAfterErrorChecks(order);
             return tab;
+        }
+
+        private static Tab GetTabAfterErrorChecks(Order order)
+        {
+            var tab = new Tab();
+            AddDishesToTab(order, tab);
+            tab.TabStatus = GetTabStatusFromTabAmount(tab);
+            return tab;
+        }
+
+        private static Tab.Status GetTabStatusFromTabAmount(Tab tab)
+        {
+            return tab.Amount > 0 ? Tab.Status.Open : Tab.Status.Settled;
+        }
+
+        private static bool IsTabSettled(Order order)
+        {
+            return order == null || !order.IsActive;
+        }
+
+        private static void AddDishesToTab(Order order, Tab tab)
+        {
+            tab.Dishes = new List<TabDish>();
+            foreach (var item in order.Items)
+            {
+                tab.Amount += item.Price;
+                tab.Dishes.Add(new TabDish(item));
+            }
         }
 
         public PayTabErrorCodes PayTab(int tableNumber, decimal payedAmount)

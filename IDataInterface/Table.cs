@@ -15,5 +15,7 @@ namespace IDataInterface
         public int TableNumber { get; set; }
 
         public ICollection<Chair> Chairs { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }

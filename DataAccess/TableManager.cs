@@ -13,6 +13,7 @@ namespace DataAccess
             using var context = new RestaurantContext();
             var table = new Table();
             table.TableNumber = tableNumber;
+            table.Deleted = false;
             context.Tables.Add(table);
             context.SaveChanges();
         }
@@ -21,6 +22,7 @@ namespace DataAccess
         {
             using var context = new RestaurantContext();
             return (from t in context.Tables
+                    where !t.Deleted
                     select t)
                     .Include(t => t.Chairs).ToList();
         }
@@ -30,6 +32,7 @@ namespace DataAccess
             using var context = new RestaurantContext();
             return (from t in context.Tables
                     where t.TableNumber == tableNumber
+                    && !t.Deleted
                     select t)
                     .Include(t => t.Chairs)
                     .FirstOrDefault();
@@ -41,7 +44,7 @@ namespace DataAccess
             var table = (from t in context.Tables
                          where t.TableID == tableID
                          select t).FirstOrDefault();
-            context.Tables.Remove(table);
+            table.Deleted = true;
             context.SaveChanges();
         }
     }

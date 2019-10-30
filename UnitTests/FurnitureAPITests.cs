@@ -36,7 +36,7 @@ namespace UnitTests
         {
             var tableManagerMock = new Mock<ITableManager>();
             var chairManagerMock = new Mock<IChairManager>();
-
+            
             tableManagerMock.Setup(m =>
                m.GetTableByTableNumber(It.IsAny<int>()))
                 .Returns(new Table 

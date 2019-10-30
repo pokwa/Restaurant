@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDataInterface;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +16,7 @@ namespace Restaurant
 
         public Status TabStatus;
         public decimal Amount;
+        public List<TabDish> Dishes;
 
     }
 }

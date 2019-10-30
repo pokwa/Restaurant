@@ -27,7 +27,7 @@ namespace DataAccess
             return (from o in context.Orders.Include(o => o.Items)
                     join t in context.Tables
                     on o.TableID equals t.TableID
-                    where t.TableNumber == tableNumber
+                    where t.TableNumber == tableNumber && !t.Deleted
                     select o.Items)
                     .SelectMany(d => d)
                     .Where(d => d.DishType == nowServing)

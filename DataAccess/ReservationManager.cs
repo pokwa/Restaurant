@@ -13,6 +13,7 @@ namespace DataAccess
             using var context = new RestaurantContext();
             var tables = (from t in context.Tables.Include(t => t.Chairs)
                           where t.Chairs.Count >= numberOfPeople
+                          && !t.Deleted
                           select t);
             var timeSlots = (from s in context.TimeSlots
                              where tables.Any(t => 
